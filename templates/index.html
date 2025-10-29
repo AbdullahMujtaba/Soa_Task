@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Essential Services App</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        h2 { margin-top: 30px; }
+        input { margin-right: 10px; }
+        button { margin-right: 10px; }
+        pre { background: #f0f0f0; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to All Services App</h1>
+
+    <h2>Echo</h2>
+    <input id="echo-input" placeholder="Enter something">
+    <button onclick="sendEcho()">Send</button>
+    <pre id="echo-output"></pre>
+
+    <h2>Credit Card Validator</h2>
+    <input id="card-input" placeholder="Enter card number">
+    <button onclick="validateCard()">Validate</button>
+    <pre id="card-output"></pre>
+
+    <h2>IP to Geo</h2>
+    <input id="ip-input" placeholder="Enter IP">
+    <button onclick="getGeo()">Get Geo</button>
+    <pre id="ip-output"></pre>
+
+    <h2>Calculator</h2>
+    <input id="calc-input" placeholder="Enter expression">
+    <button onclick="calculate()">Calculate</button>
+    <pre id="calc-output"></pre>
+
+    <script>
+        async function sendEcho() {
+            const message = document.getElementById("echo-input").value;
+            const res = await fetch("/echo", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({message})
+            });
+            const data = await res.json();
+            document.getElementById("echo-output").textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function validateCard() {
+            const card_number = document.getElementById("card-input").value;
+            const res = await fetch("/validate-card", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({card_number})
+            });
+            const data = await res.json();
+            document.getElementById("card-output").textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function getGeo() {
+            const ip = document.getElementById("ip-input").value;
+            const res = await fetch("/ip-geo", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ip})
+            });
+            const data = await res.json();
+            document.getElementById("ip-output").textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function calculate() {
+            const expression = document.getElementById("calc-input").value;
+            const res = await fetch("/calculate", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({expression})
+            });
+            const data = await res.json();
+            document.getElementById("calc-output").textContent = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>
